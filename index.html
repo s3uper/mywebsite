@@ -411,19 +411,34 @@
     .tool-badge {
       display: inline-flex;
       align-items: center;
-      padding: 0.35rem 0.65rem;
+      gap: 0.45rem;
+      padding: 0.42rem 0.82rem;
       border-radius: 999px;
       border: 1px solid var(--accent-light);
       background: color-mix(in oklab, var(--surface), var(--bg) 25%);
       color: var(--text);
       font-size: 0.85rem;
       font-weight: 600;
-      transition: background-color 180ms var(--ease-out), border-color 180ms var(--ease-out);
+      transition: background-color 180ms var(--ease-out), border-color 180ms var(--ease-out), color 180ms var(--ease-out);
+    }
+
+    .tool-badge-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      color: var(--accent);
+      transition: color 180ms var(--ease-out), transform 180ms var(--ease-out);
     }
 
     .tool-badge:hover {
-      background: var(--accent-soft);
+      background: color-mix(in oklab, var(--accent-light), white 22%);
       border-color: var(--accent);
+      color: color-mix(in oklab, white, var(--text) 15%);
+    }
+
+    .tool-badge:hover .tool-badge-icon {
+      color: color-mix(in oklab, white, var(--accent) 35%);
+      transform: translateY(-0.5px);
     }
 
     .focus-list {
@@ -535,13 +550,34 @@
       <article class="card col-12">
         <h2>Womit ich arbeite</h2>
         <div class="tools-grid">
-          <span class="tool-badge">HTML</span>
-          <span class="tool-badge">CSS</span>
-          <span class="tool-badge">JavaScript</span>
-          <span class="tool-badge">VS Code</span>
-          <span class="tool-badge">GitHub</span>
-          <span class="tool-badge">Cloudflare</span>
-          <span class="tool-badge">Discord</span>
+          <span class="tool-badge">
+            <svg class="tool-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span>HTML</span>
+          </span>
+          <span class="tool-badge">
+            <svg class="tool-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M9 12.5a2.5 2.5 0 0 1 5 0v7.5a2.5 2.5 0 0 1-5 0z"/><path d="m5 20 2.2-2.2"/><path d="m4 13 3.2 3.2"/></svg>
+            <span>CSS</span>
+          </span>
+          <span class="tool-badge">
+            <svg class="tool-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 7l4 4"/><path d="m16 3 4 4-4 4"/><path d="M10 20h4"/><path d="M10 14h4"/></svg>
+            <span>JavaScript</span>
+          </span>
+          <span class="tool-badge">
+            <svg class="tool-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
+            <span>VS Code</span>
+          </span>
+          <span class="tool-badge">
+            <svg class="tool-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18c-4.5 2-5-2-7-2"/><path d="M15 22v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77 5.07 5.07 0 0 0 18.91 1S17.73.65 15 2.48a13.38 13.38 0 0 0-6 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77 5.44 5.44 0 0 0 3.5 8.53c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <span>GitHub</span>
+          </span>
+          <span class="tool-badge">
+            <svg class="tool-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.8 10a4.8 4.8 0 0 0-9-1.8A3.9 3.9 0 1 0 7 16h11.1a3.1 3.1 0 0 0 .7-6z"/></svg>
+            <span>Cloudflare</span>
+          </span>
+          <span class="tool-badge">
+            <svg class="tool-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12h.01M16 12h.01"/><path d="M7 7h10a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H10l-4 3v-3H7a3 3 0 0 1-3-3v-5a3 3 0 0 1 3-3z"/></svg>
+            <span>Discord</span>
+          </span>
         </div>
       </article>
     </section>
@@ -567,13 +603,6 @@
             </span>
             <span class="contact-label">Discord</span>
             <span class="contact-value">sueperdev</span>
-          </a>
-          <a class="contact-tile" href="mailto:volkmersteffen46@gmail.com">
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-            </span>
-            <span class="contact-label">E-Mail</span>
-            <span class="contact-value">volkmersteffen46@gmail.com</span>
           </a>
           <a class="contact-tile" href="https://www.instagram.com/sueper.tk/" target="_blank" rel="noopener noreferrer">
             <span class="contact-icon" aria-hidden="true">
