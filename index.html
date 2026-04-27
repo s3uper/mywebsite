@@ -8,27 +8,57 @@
   <style>
     :root {
       --bg: #eceff3;
+      --bg-glow: #f6f9ff;
       --surface: #ffffff;
       --text: #1f2937;
       --muted: #4b5563;
-      --accent: #2563eb;
+      --accent: #3b82f6;
+      --accent-strong: #1e40af;
       --accent-light: #93c5fd;
       --accent-soft: #dbeafe;
       --border: #d6dbe3;
+      --line: #eef2f7;
+      --panel-bg: #f8fbff;
+      --nav-bg: rgba(236, 239, 243, 0.88);
+      --footer-text: #667085;
       --danger: #b42318;
+      --btn-primary-text: #ffffff;
       --shadow: 0 10px 30px rgba(31, 41, 55, 0.08);
       --radius: 14px;
       --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    * { box-sizing: border-box; }
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --bg-glow: #111827;
+      --surface: #1e293b;
+      --text: #f9fafb;
+      --muted: #e5e7eb;
+      --accent: #60a5fa;
+      --accent-strong: #93c5fd;
+      --accent-light: #93c5fd;
+      --accent-soft: rgba(96, 165, 250, 0.16);
+      --border: #334155;
+      --line: #334155;
+      --panel-bg: #172033;
+      --nav-bg: rgba(15, 23, 42, 0.82);
+      --footer-text: #cbd5e1;
+      --danger: #f87171;
+      --btn-primary-text: #0f172a;
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.45);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
 
     html, body {
       margin: 0;
       padding: 0;
       font-family: "Segoe UI", "Inter", "Noto Sans", Arial, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at 5% -10%, #f6f9ff 0, var(--bg) 45%), var(--bg);
+      background: radial-gradient(circle at 5% -10%, var(--bg-glow) 0, var(--bg) 45%), var(--bg);
     }
 
     body {
@@ -51,7 +81,7 @@
       top: 0;
       z-index: 1000;
       backdrop-filter: blur(12px);
-      background: color-mix(in oklab, var(--bg), white 35%);
+      background: var(--nav-bg);
       border-bottom: 1px solid var(--border);
     }
 
@@ -67,6 +97,12 @@
       font-weight: 700;
       letter-spacing: 0.01em;
       color: var(--text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
     .nav-links {
@@ -91,6 +127,35 @@
       color: var(--accent);
       border-bottom-color: var(--accent);
     }
+
+    .theme-toggle {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
     .mobile-toggle {
       display: none;
@@ -133,7 +198,7 @@
       padding: 0.9rem 0;
       color: var(--muted);
       font-weight: 600;
-      border-bottom: 1px solid #eef2f7;
+      border-bottom: 1px solid var(--line);
     }
 
     .mobile-panel a.active {
@@ -190,11 +255,11 @@
 
     .btn-primary {
       background: var(--accent);
-      color: #fff;
+      color: var(--btn-primary-text);
     }
 
     .btn-primary:hover {
-      background: #1e40af;
+      background: var(--accent-strong);
       transform: translateY(-1px);
     }
 
@@ -251,7 +316,7 @@
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      border-bottom: 1px solid #eef2f7;
+      border-bottom: 1px solid var(--line);
       padding-bottom: 0.6rem;
       color: var(--muted);
     }
@@ -265,8 +330,8 @@
       margin-top: 1.1rem;
       padding: 0.75rem;
       border-radius: 10px;
-      background: #f8fbff;
-      border: 1px solid #e4ecf8;
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
       color: var(--muted);
     }
 
@@ -284,13 +349,13 @@
     .note {
       margin-top: 0.55rem;
       font-size: 0.88rem;
-      color: #667085;
+      color: var(--footer-text);
     }
 
     footer {
       padding: 2rem 0 2.5rem;
       border-top: 1px solid var(--border);
-      color: #667085;
+      color: var(--footer-text);
       font-size: 0.92rem;
       text-align: center;
     }
@@ -325,14 +390,20 @@
   <nav class="site-nav" id="siteNav">
     <div class="container nav-inner">
       <a class="brand" href="index.html">Steffen Volkmer</a>
-      <div class="nav-links" aria-label="Hauptnavigation">
-        <a class="nav-link active" href="index.html">Home</a>
-        <a class="nav-link" href="lebenslauf.html">Lebenslauf</a>
-        <a class="nav-link" href="kontakt.html">Kontakt</a>
+      <div class="nav-actions">
+        <div class="nav-links" aria-label="Hauptnavigation">
+          <a class="nav-link active" href="index.html">Home</a>
+          <a class="nav-link" href="lebenslauf.html">Lebenslauf</a>
+          <a class="nav-link" href="kontakt.html">Kontakt</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Dark Mode umschalten" title="Dark Mode umschalten">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menue oeffnen" aria-expanded="false" aria-controls="mobilePanel">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Menue oeffnen" aria-expanded="false" aria-controls="mobilePanel">
-        <span></span><span></span><span></span>
-      </button>
     </div>
     <div class="mobile-panel" id="mobilePanel">
       <div class="container">
@@ -387,8 +458,44 @@
     const yearEl = document.getElementById("year");
     yearEl.textContent = new Date().getFullYear();
 
+    const root = document.documentElement;
+    const themeToggle = document.getElementById("themeToggle");
     const mobileToggle = document.getElementById("mobileToggle");
     const mobilePanel = document.getElementById("mobilePanel");
+
+    function getCookie(name) {
+      const cookie = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(name + "="));
+      return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
+    }
+
+    function setCookie(name, value, days) {
+      const maxAge = days * 24 * 60 * 60;
+      // Falls Cookies blockiert sind, funktioniert der Theme-Wechsel dennoch bis zum Seitenwechsel.
+      document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
+    }
+
+    function applyTheme(theme) {
+      root.setAttribute("data-theme", theme);
+      themeToggle.setAttribute("aria-label", theme === "dark" ? "Light Mode aktivieren" : "Dark Mode aktivieren");
+      themeToggle.setAttribute("title", theme === "dark" ? "Light Mode" : "Dark Mode");
+    }
+
+    const savedTheme = getCookie("theme");
+    if (savedTheme === "dark" || savedTheme === "light") {
+      applyTheme(savedTheme);
+    } else {
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      applyTheme(prefersDark ? "dark" : "light");
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const currentTheme = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      applyTheme(nextTheme);
+      setCookie("theme", nextTheme, 365);
+    });
 
     mobileToggle.addEventListener("click", () => {
       const isOpen = mobilePanel.classList.toggle("is-open");
