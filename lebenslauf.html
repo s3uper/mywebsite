@@ -254,14 +254,24 @@
       align-items: center;
     }
 
-    .avatar-placeholder {
+    .profile-photo {
       width: 130px;
       height: 130px;
-      border-radius: 16px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, var(--avatar-bg-start), var(--avatar-bg-end));
+      box-shadow: var(--shadow);
+      display: block;
+    }
+
+    .foto-fallback {
+      width: 130px;
+      height: 130px;
+      border-radius: 12px;
       border: 1px dashed var(--accent-light);
       background: linear-gradient(145deg, var(--avatar-bg-start), var(--avatar-bg-end));
       color: var(--avatar-text);
-      display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -464,7 +474,8 @@
         grid-template-columns: 1fr;
       }
 
-      .avatar-placeholder {
+      .profile-photo,
+      .foto-fallback {
         width: 100%;
         max-width: 180px;
         margin-inline: auto;
@@ -522,7 +533,13 @@
   <main class="container">
     <section class="top">
       <div class="profile-card">
-        <div class="avatar-placeholder">FOTO-PLATZHALTER</div>
+        <!-- FOTO HIER EINFÜGEN:
+             1. Erstelle im Projekt-Hauptverzeichnis einen Ordner namens "images"
+             2. Lege dein Profilbild als "profil.jpg" in diesen Ordner
+             3. Push mit git, dann erscheint das Bild automatisch auf der Webseite
+             Optimale Bildgröße: 400x400 Pixel, quadratisch -->
+        <img class="profile-photo" src="images/profil.jpg" alt="Steffen Volkmer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="foto-fallback" style="display:none;">FOTO PLATZHALTER</div>
         <div>
           <h1>Steffen Volkmer</h1>
           <p class="subtitle">FSJler</p>
