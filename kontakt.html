@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Steffen Volkmer | Kontakt</title>
   <meta name="description" content="Kontaktformular von Steffen Volkmer" />
@@ -336,7 +336,7 @@
     <header class="page-header">
       <span class="eyebrow">Kontakt</span>
       <h1>Kontaktformular</h1>
-      <p class="lead">Alle Felder sind Pflicht. Beim Absenden wird dein E-Mail-Programm geoeffnet und die eingetragenen Daten werden in eine neue Nachricht uebernommen.</p>
+      <p class="lead">Alle Felder sind Pflicht. Beim Absenden wird dein E-Mail-Programm geöffnet und die eingetragenen Daten werden in eine neue Nachricht übernommen.</p>
     </header>
 
     <section class="form-wrap">
@@ -448,7 +448,7 @@
         setError("email", "Bitte eine E-Mail-Adresse eintragen.");
         ok = false;
       } else if (!emailPattern.test(emailValue)) {
-        setError("email", "Bitte eine gueltige E-Mail-Adresse eintragen.");
+        setError("email", "Bitte eine gültige E-Mail-Adresse eintragen.");
         ok = false;
       } else {
         setError("email", "");
@@ -477,7 +477,7 @@
 
       if (!validate()) {
         formStatus.style.color = "#b42318";
-        formStatus.textContent = "Bitte pruefe die markierten Felder.";
+        formStatus.textContent = "Bitte prüfe die markierten Felder.";
         return;
       }
 
@@ -497,7 +497,7 @@
       window.location.href = "mailto:" + recipient + "?subject=" + mailSubject + "&body=" + mailBody;
 
       formStatus.style.color = "#0f766e";
-      formStatus.textContent = "E-Mail-Programm wurde geoeffnet.";
+      formStatus.textContent = "E-Mail-Programm wurde geöffnet.";
     });
   </script>
 </body>
