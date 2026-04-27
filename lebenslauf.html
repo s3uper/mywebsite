@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Steffen Volkmer | Lebenslauf</title>
+  <meta name="description" content="Lebenslauf von Steffen Volkmer" />
+  <style>
+    :root {
+      --bg: #eceff3;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --accent: #2563eb;
+      --accent-light: #93c5fd;
+      --accent-soft: #dbeafe;
+      --border: #d6dbe3;
+      --shadow: 0 10px 30px rgba(31, 41, 55, 0.08);
+      --radius: 14px;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", "Inter", "Noto Sans", Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 5% -10%, #f6f9ff 0, var(--bg) 45%), var(--bg);
+    }
+
+    body {
+      min-height: 100dvh;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 100% - 2rem);
+      margin-inline: auto;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg), white 35%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      font-weight: 600;
+      padding: 0.55rem 0.2rem;
+      border-bottom: 2px solid transparent;
+      transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out);
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .mobile-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      padding: 0;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .mobile-toggle span {
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      transition: transform 220ms var(--ease-out), opacity 220ms var(--ease-out);
+    }
+
+    .mobile-toggle span:nth-child(1) { transform: translateY(-6px); }
+    .mobile-toggle span:nth-child(2) { transform: translateY(0); }
+    .mobile-toggle span:nth-child(3) { transform: translateY(6px); }
+
+    .mobile-toggle.is-open span:nth-child(1) { transform: rotate(45deg); }
+    .mobile-toggle.is-open span:nth-child(2) { opacity: 0; }
+    .mobile-toggle.is-open span:nth-child(3) { transform: rotate(-45deg); }
+
+    .mobile-panel {
+      display: none;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .mobile-panel a {
+      display: block;
+      padding: 0.9rem 0;
+      color: var(--muted);
+      font-weight: 600;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    .mobile-panel a.active {
+      color: var(--accent);
+    }
+
+    .top {
+      padding: 4rem 0 2rem;
+    }
+
+    .profile-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.3rem;
+      display: grid;
+      gap: 1.2rem;
+      grid-template-columns: 130px minmax(0, 1fr);
+      align-items: center;
+    }
+
+    .avatar-placeholder {
+      width: 130px;
+      height: 130px;
+      border-radius: 16px;
+      border: 1px dashed var(--accent-light);
+      background: linear-gradient(145deg, #eff6ff, #dbeafe);
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.84rem;
+      padding: 0.7rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin-top: 0.3rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .placeholder-note {
+      margin-top: 0.45rem;
+      color: #667085;
+      font-size: 0.9rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      padding-bottom: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.2rem;
+    }
+
+    .col-4 { grid-column: span 4; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+
+    h2 {
+      margin: 0 0 0.7rem;
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+      letter-spacing: -0.015em;
+    }
+
+    .data-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .data-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid #eef2f7;
+      padding-bottom: 0.55rem;
+      color: var(--muted);
+    }
+
+    .data-list strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .timeline {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 125px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #d9e5fb;
+    }
+
+    .timeline li {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 1.2rem;
+      align-items: start;
+      position: relative;
+    }
+
+    .timeline .date {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.93rem;
+      text-align: right;
+      padding-top: 0.18rem;
+    }
+
+    .timeline .content {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.85rem;
+      background: #fcfdff;
+      position: relative;
+    }
+
+    .timeline .content::before {
+      content: "";
+      position: absolute;
+      left: -1.06rem;
+      top: 0.9rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px #e6efff;
+    }
+
+    .timeline h3 {
+      margin: 0 0 0.2rem;
+      font-size: 1rem;
+    }
+
+    .timeline p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.32rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid #cfe1ff;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .progress-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .bar {
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .bar-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .bar-track {
+      height: 8px;
+      background: #eaf1fb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    }
+
+    .languages {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .languages li {
+      border: 1px solid #e2e8f0;
+      background: #f9fbff;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .print-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin: 0.6rem 0 1.2rem;
+    }
+
+    .print-btn {
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-weight: 600;
+      font-size: 0.94rem;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      transition: transform 180ms var(--ease-out), background 180ms var(--ease-out);
+    }
+
+    .print-btn:hover {
+      background: #1e40af;
+      transform: translateY(-1px);
+    }
+
+    .print-btn:active { transform: scale(0.98); }
+
+    footer {
+      padding: 2rem 0 2.5rem;
+      border-top: 1px solid var(--border);
+      color: #667085;
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      .col-4,
+      .col-8 { grid-column: span 12; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: inline-flex; }
+      .mobile-panel.is-open { display: block; }
+
+      .top { padding-top: 3.2rem; }
+
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+
+      .avatar-placeholder {
+        width: 100%;
+        max-width: 180px;
+        margin-inline: auto;
+      }
+
+      .timeline::before {
+        left: 0;
+      }
+
+      .timeline li {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+        padding-left: 1rem;
+      }
+
+      .timeline .date {
+        text-align: left;
+      }
+
+      .timeline .content::before {
+        left: -1.38rem;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .site-nav,
+      .print-actions,
+      footer {
+        display: none !important;
+      }
+
+      .container {
+        width: 100%;
+        margin: 0;
+      }
+
+      .card,
+      .profile-card {
+        box-shadow: none;
+        border-color: #d5dbe3;
+        break-inside: avoid;
+      }
+
+      .top {
+        padding-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" id="siteNav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">Steffen Volkmer</a>
+      <div class="nav-links" aria-label="Hauptnavigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link active" href="lebenslauf.html">Lebenslauf</a>
+        <a class="nav-link" href="kontakt.html">Kontakt</a>
+      </div>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menue oeffnen" aria-expanded="false" aria-controls="mobilePanel">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-panel" id="mobilePanel">
+      <div class="container">
+        <a href="index.html">Home</a>
+        <a class="active" href="lebenslauf.html">Lebenslauf</a>
+        <a href="kontakt.html">Kontakt</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="top">
+      <div class="profile-card">
+        <div class="avatar-placeholder">FOTO-PLATZHALTER</div>
+        <div>
+          <h1>[DEIN_NAME]</h1>
+          <p class="subtitle">[KURZER_UNTERTITEL_ODER_POSITION]</p>
+          <p class="placeholder-note">Alle Inhalte sind als Platzhalter markiert und koennen direkt ersetzt werden.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="print-actions">
+      <button type="button" class="print-btn" id="printBtn">Als PDF speichern</button>
+    </div>
+
+    <section class="grid">
+      <article class="card col-4">
+        <h2>Persoenliche Daten</h2>
+        <ul class="data-list">
+          <li><span>Name</span><strong>[DEIN_NAME]</strong></li>
+          <li><span>Wohnort</span><strong>[DEIN_WOHNORT]</strong></li>
+          <li><span>Geburtsdatum</span><strong>[TT.MM.JJJJ]</strong></li>
+          <li><span>E-Mail</span><strong>[DEINE_EMAIL]</strong></li>
+          <li><span>Telefon</span><strong>[DEINE_TELEFONNUMMER]</strong></li>
+        </ul>
+      </article>
+
+      <article class="card col-8">
+        <h2>Berufserfahrung</h2>
+        <ul class="timeline">
+          <li>
+            <div class="date">[MM/JJJJ - heute]</div>
+            <div class="content">
+              <h3>[POSITION ODER ROLLE]</h3>
+              <p>[UNTERNEHMEN/ORGANISATION] - [KURZE BESCHREIBUNG DER AUFGABEN]</p>
+            </div>
+          </li>
+          <li>
+            <div class="date">[MM/JJJJ - MM/JJJJ]</div>
+            <div class="content">
+              <h3>[POSITION ODER ROLLE]</h3>
+              <p>[UNTERNEHMEN/ORGANISATION] - [KURZE BESCHREIBUNG DER AUFGABEN]</p>
+            </div>
+          </li>
+          <li>
+            <div class="date">[MM/JJJJ - MM/JJJJ]</div>
+            <div class="content">
+              <h3>[POSITION ODER ROLLE]</h3>
+              <p>[UNTERNEHMEN/ORGANISATION] - [KURZE BESCHREIBUNG DER AUFGABEN]</p>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card col-8">
+        <h2>Ausbildung</h2>
+        <ul class="timeline">
+          <li>
+            <div class="date">[MM/JJJJ - MM/JJJJ]</div>
+            <div class="content">
+              <h3>[ABSCHLUSS ODER SCHULE]</h3>
+              <p>[EINRICHTUNG] - [SCHWERPUNKT ODER NOTIZ]</p>
+            </div>
+          </li>
+          <li>
+            <div class="date">[MM/JJJJ - MM/JJJJ]</div>
+            <div class="content">
+              <h3>[ABSCHLUSS ODER SCHULE]</h3>
+              <p>[EINRICHTUNG] - [SCHWERPUNKT ODER NOTIZ]</p>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card col-4">
+        <h2>Faehigkeiten</h2>
+        <div class="skills">
+          <span class="tag">[SKILL_1]</span>
+          <span class="tag">[SKILL_2]</span>
+          <span class="tag">[SKILL_3]</span>
+          <span class="tag">[SKILL_4]</span>
+        </div>
+
+        <div class="progress-list">
+          <div class="bar">
+            <div class="bar-head"><span>[KOMPETENZ_1]</span><span>[80%]</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width: 80%;"></div></div>
+          </div>
+          <div class="bar">
+            <div class="bar-head"><span>[KOMPETENZ_2]</span><span>[65%]</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width: 65%;"></div></div>
+          </div>
+          <div class="bar">
+            <div class="bar-head"><span>[KOMPETENZ_3]</span><span>[50%]</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width: 50%;"></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card col-12">
+        <h2>Sprachen</h2>
+        <ul class="languages">
+          <li><span>[SPRACHE_1]</span><strong>[NIVEAU]</strong></li>
+          <li><span>[SPRACHE_2]</span><strong>[NIVEAU]</strong></li>
+          <li><span>[SPRACHE_3]</span><strong>[NIVEAU]</strong></li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Backnang · &copy; <span id="year"></span> Steffen Volkmer
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const mobileToggle = document.getElementById("mobileToggle");
+    const mobilePanel = document.getElementById("mobilePanel");
+
+    mobileToggle.addEventListener("click", () => {
+      const isOpen = mobilePanel.classList.toggle("is-open");
+      mobileToggle.classList.toggle("is-open", isOpen);
+      mobileToggle.setAttribute("aria-expanded", String(isOpen));
+      mobileToggle.setAttribute("aria-label", isOpen ? "Menue schliessen" : "Menue oeffnen");
+    });
+
+    mobilePanel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobilePanel.classList.remove("is-open");
+        mobileToggle.classList.remove("is-open");
+        mobileToggle.setAttribute("aria-expanded", "false");
+        mobileToggle.setAttribute("aria-label", "Menue oeffnen");
+      });
+    });
+
+    document.getElementById("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+  </script>
+</body>
+</html>
