@@ -30,10 +30,8 @@
       --tag-bg: #eff6ff;
       --tag-border: #cfe1ff;
       --tag-text: #1d4ed8;
-      --bar-track: #eaf1fb;
       --language-bg: #f9fbff;
       --language-border: #e2e8f0;
-      --btn-primary-text: #ffffff;
       --shadow: 0 10px 30px rgba(31, 41, 55, 0.08);
       --radius: 14px;
       --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -63,10 +61,8 @@
       --tag-bg: rgba(96, 165, 250, 0.14);
       --tag-border: #334155;
       --tag-text: #bfdbfe;
-      --bar-track: #1f2b3f;
       --language-bg: #111827;
       --language-border: #334155;
-      --btn-primary-text: #0f172a;
       --shadow: 0 10px 30px rgba(2, 6, 23, 0.45);
     }
 
@@ -178,6 +174,21 @@
     .theme-toggle .icon-moon { display: block; }
     [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
     [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+    .theme-reveal {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3000;
+      opacity: 0;
+      clip-path: circle(0px at 100% 0);
+      background: var(--bg);
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+    }
 
     .mobile-toggle {
       display: none;
@@ -410,36 +421,6 @@
       font-weight: 600;
     }
 
-    .progress-list {
-      display: grid;
-      gap: 0.7rem;
-    }
-
-    .bar {
-      display: grid;
-      gap: 0.35rem;
-    }
-
-    .bar-head {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .bar-track {
-      height: 8px;
-      background: var(--bar-track);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
-    }
-
     .languages {
       margin: 0;
       padding: 0;
@@ -458,31 +439,6 @@
       justify-content: space-between;
       gap: 1rem;
     }
-
-    .print-actions {
-      display: flex;
-      justify-content: flex-end;
-      margin: 0.6rem 0 1.2rem;
-    }
-
-    .print-btn {
-      border: 1px solid transparent;
-      border-radius: 10px;
-      padding: 0.7rem 1rem;
-      font-weight: 600;
-      font-size: 0.94rem;
-      cursor: pointer;
-      background: var(--accent);
-      color: var(--btn-primary-text);
-      transition: transform 180ms var(--ease-out), background 180ms var(--ease-out);
-    }
-
-    .print-btn:hover {
-      background: var(--accent-strong);
-      transform: translateY(-1px);
-    }
-
-    .print-btn:active { transform: scale(0.98); }
 
     footer {
       padding: 2rem 0 2.5rem;
@@ -533,33 +489,6 @@
       }
     }
 
-    @media print {
-      body {
-        background: #fff;
-      }
-
-      .site-nav,
-      .print-actions,
-      footer {
-        display: none !important;
-      }
-
-      .container {
-        width: 100%;
-        margin: 0;
-      }
-
-      .card,
-      .profile-card {
-        box-shadow: none;
-        border-color: #d5dbe3;
-        break-inside: avoid;
-      }
-
-      .top {
-        padding-top: 0;
-      }
-    }
   </style>
 </head>
 <body>
@@ -602,10 +531,6 @@
       </div>
     </section>
 
-    <div class="print-actions">
-      <button type="button" class="print-btn" id="printBtn">Als PDF speichern</button>
-    </div>
-
     <section class="grid">
       <article class="card col-4">
         <h2>Persönliche Daten</h2>
@@ -619,18 +544,39 @@
 
       <article class="card col-8">
         <h2>Berufserfahrung</h2>
-        <p>Aktuell im Freiwilligen Sozialen Jahr - erste praktische Erfahrungen werden gesammelt.</p>
+        <ul class="timeline">
+          <li>
+            <div class="date">09/2025 - 08/2026</div>
+            <div class="content">
+              <h3>Freiwilliges Soziales Jahr - Katholische Kirche in Backnang</h3>
+              <p>Soziale Arbeit in der Schule, digitale Unterstützung und Einrichtung digitaler Geräte (Tablets)</p>
+            </div>
+          </li>
+        </ul>
       </article>
 
       <article class="card col-8">
         <h2>Ausbildung</h2>
         <ul class="timeline">
           <li>
-            <!-- Platzhalter fuer spaeter: [ZEITRAUM_SCHULE], [NAME_DER_SCHULE], [ABSCHLUSS_ODER_KLASSE] -->
-            <div class="date">[ZEITRAUM_SCHULE]</div>
+            <div class="date">2024 - 2025</div>
             <div class="content">
-              <h3>[NAME_DER_SCHULE]</h3>
-              <p>[ABSCHLUSS_ODER_KLASSE]</p>
+              <h3>Eduard-Breuninger-Schule Backnang</h3>
+              <p>Kaufmännisches Berufskolleg</p>
+            </div>
+          </li>
+          <li>
+            <div class="date">2018 - 2024</div>
+            <div class="content">
+              <h3>Max-Eyth-Realschule Backnang</h3>
+              <p>Mittlere Reife (Wahlpflichtfach: Technik)</p>
+            </div>
+          </li>
+          <li>
+            <div class="date">2014 - 2018</div>
+            <div class="content">
+              <h3>Gemeinschaftsschule in der Taus Backnang</h3>
+              <p>Grundschule</p>
             </div>
           </li>
         </ul>
@@ -643,21 +589,6 @@
           <span class="tag">CSS</span>
           <span class="tag">Word</span>
           <span class="tag">Englisch</span>
-        </div>
-
-        <div class="progress-list">
-          <div class="bar">
-            <div class="bar-head"><span>HTML</span><span>80%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width: 80%;"></div></div>
-          </div>
-          <div class="bar">
-            <div class="bar-head"><span>CSS</span><span>65%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width: 65%;"></div></div>
-          </div>
-          <div class="bar">
-            <div class="bar-head"><span>Englisch</span><span>50%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width: 50%;"></div></div>
-          </div>
         </div>
       </article>
 
@@ -675,11 +606,14 @@
     Backnang · &copy; <span id="year"></span> Steffen Volkmer
   </footer>
 
+  <div class="theme-reveal" id="themeReveal" aria-hidden="true"></div>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const root = document.documentElement;
     const themeToggle = document.getElementById("themeToggle");
+    const themeReveal = document.getElementById("themeReveal");
     const mobileToggle = document.getElementById("mobileToggle");
     const mobilePanel = document.getElementById("mobilePanel");
 
@@ -702,6 +636,72 @@
       themeToggle.setAttribute("title", theme === "dark" ? "Light Mode" : "Dark Mode");
     }
 
+    function themeBg(theme) {
+      return theme === "dark" ? "#0f172a" : "#eceff3";
+    }
+
+    function maxRadius(x, y) {
+      return Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    }
+
+    async function animateThemeToggle(nextTheme, x, y) {
+      const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const radius = maxRadius(x, y);
+
+      if (!reduceMotion && typeof document.startViewTransition === "function") {
+        try {
+          const transition = document.startViewTransition(() => {
+            applyTheme(nextTheme);
+          });
+
+          await transition.ready;
+          await document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${radius}px at ${x}px ${y}px)`
+              ]
+            },
+            {
+              duration: 700,
+              easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+              pseudoElement: "::view-transition-new(root)"
+            }
+          ).finished;
+          return;
+        } catch (_error) {
+          // Fallback unten nutzt klassisches Overlay.
+        }
+      }
+
+      if (reduceMotion) {
+        applyTheme(nextTheme);
+        return;
+      }
+
+      themeReveal.style.transition = "none";
+      themeReveal.style.background = themeBg(nextTheme);
+      themeReveal.style.opacity = "1";
+      themeReveal.style.clipPath = `circle(0px at ${x}px ${y}px)`;
+
+      requestAnimationFrame(() => {
+        themeReveal.style.transition = "clip-path 700ms cubic-bezier(0.4, 0, 0.2, 1)";
+        themeReveal.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`;
+      });
+
+      await new Promise((resolve) => {
+        const onEnd = () => {
+          themeReveal.removeEventListener("transitionend", onEnd);
+          resolve();
+        };
+        themeReveal.addEventListener("transitionend", onEnd);
+      });
+
+      applyTheme(nextTheme);
+      themeReveal.style.transition = "opacity 200ms ease";
+      themeReveal.style.opacity = "0";
+    }
+
     const savedTheme = getCookie("theme");
     if (savedTheme === "dark" || savedTheme === "light") {
       applyTheme(savedTheme);
@@ -710,10 +710,14 @@
       applyTheme(prefersDark ? "dark" : "light");
     }
 
-    themeToggle.addEventListener("click", () => {
+    themeToggle.addEventListener("click", async () => {
       const currentTheme = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
       const nextTheme = currentTheme === "dark" ? "light" : "dark";
-      applyTheme(nextTheme);
+      const rect = themeToggle.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+
+      await animateThemeToggle(nextTheme, originX, originY);
       setCookie("theme", nextTheme, 365);
     });
 
@@ -733,9 +737,6 @@
       });
     });
 
-    document.getElementById("printBtn").addEventListener("click", () => {
-      window.print();
-    });
   </script>
 </body>
 </html>

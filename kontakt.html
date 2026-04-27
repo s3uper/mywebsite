@@ -165,6 +165,21 @@
     [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
     [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
+    .theme-reveal {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3000;
+      opacity: 0;
+      clip-path: circle(0px at 100% 0);
+      background: var(--bg);
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+    }
+
     .mobile-toggle {
       display: none;
       width: 42px;
@@ -466,11 +481,14 @@
     Backnang · &copy; <span id="year"></span> Steffen Volkmer
   </footer>
 
+  <div class="theme-reveal" id="themeReveal" aria-hidden="true"></div>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const root = document.documentElement;
     const themeToggle = document.getElementById("themeToggle");
+    const themeReveal = document.getElementById("themeReveal");
     const mobileToggle = document.getElementById("mobileToggle");
     const mobilePanel = document.getElementById("mobilePanel");
 
@@ -493,6 +511,72 @@
       themeToggle.setAttribute("title", theme === "dark" ? "Light Mode" : "Dark Mode");
     }
 
+    function themeBg(theme) {
+      return theme === "dark" ? "#0f172a" : "#eceff3";
+    }
+
+    function maxRadius(x, y) {
+      return Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    }
+
+    async function animateThemeToggle(nextTheme, x, y) {
+      const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const radius = maxRadius(x, y);
+
+      if (!reduceMotion && typeof document.startViewTransition === "function") {
+        try {
+          const transition = document.startViewTransition(() => {
+            applyTheme(nextTheme);
+          });
+
+          await transition.ready;
+          await document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${radius}px at ${x}px ${y}px)`
+              ]
+            },
+            {
+              duration: 700,
+              easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+              pseudoElement: "::view-transition-new(root)"
+            }
+          ).finished;
+          return;
+        } catch (_error) {
+          // Fallback unten nutzt klassisches Overlay.
+        }
+      }
+
+      if (reduceMotion) {
+        applyTheme(nextTheme);
+        return;
+      }
+
+      themeReveal.style.transition = "none";
+      themeReveal.style.background = themeBg(nextTheme);
+      themeReveal.style.opacity = "1";
+      themeReveal.style.clipPath = `circle(0px at ${x}px ${y}px)`;
+
+      requestAnimationFrame(() => {
+        themeReveal.style.transition = "clip-path 700ms cubic-bezier(0.4, 0, 0.2, 1)";
+        themeReveal.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`;
+      });
+
+      await new Promise((resolve) => {
+        const onEnd = () => {
+          themeReveal.removeEventListener("transitionend", onEnd);
+          resolve();
+        };
+        themeReveal.addEventListener("transitionend", onEnd);
+      });
+
+      applyTheme(nextTheme);
+      themeReveal.style.transition = "opacity 200ms ease";
+      themeReveal.style.opacity = "0";
+    }
+
     const savedTheme = getCookie("theme");
     if (savedTheme === "dark" || savedTheme === "light") {
       applyTheme(savedTheme);
@@ -501,10 +585,14 @@
       applyTheme(prefersDark ? "dark" : "light");
     }
 
-    themeToggle.addEventListener("click", () => {
+    themeToggle.addEventListener("click", async () => {
       const currentTheme = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
       const nextTheme = currentTheme === "dark" ? "light" : "dark";
-      applyTheme(nextTheme);
+      const rect = themeToggle.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+
+      await animateThemeToggle(nextTheme, originX, originY);
       setCookie("theme", nextTheme, 365);
     });
 
